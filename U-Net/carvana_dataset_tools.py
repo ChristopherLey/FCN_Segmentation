@@ -21,7 +21,7 @@ class CarvanaDataset(Dataset):
 
     def __getitem__(self, index):
         img_path = os.path.join(self.path, self.set, self.image_list[index])
-        mask_path = os.path.join(self.path, self.set, self.image_list[index].replace(".jpg", "_mask.gif"))
+        mask_path = os.path.join(self.path, f'{self.set}_masks', self.image_list[index].replace(".jpg", "_mask.gif"))
         image = np.array(Image.open(img_path).convert("RGB"))
         mask = np.array(Image.open(mask_path).convert("L"), dtype=np.float32)
         # preprocess mask (either 0 or 255) to be binary

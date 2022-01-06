@@ -16,11 +16,11 @@ from utils import (
 
 # Hyperparameters etc.
 LEARNING_RATE = 1e-4
-BATCH_SIZE = 16
-NUM_EPOCHS = 3
+BATCH_SIZE = 8
+NUM_EPOCHS = 5
 NUM_WORKERS = 6
-IMAGE_HEIGHT = 160  # 1280 originally
-IMAGE_WIDTH = 240  # 1918 originally
+IMAGE_HEIGHT = 1280//2  # 1280 originally
+IMAGE_WIDTH = 1904//2  # 1918 originally
 PIN_MEMORY = True
 LOAD_MODEL = False
 PATH = "../../../Datasets/carvana-image-masking-challenge"
@@ -95,7 +95,7 @@ def main():
     )
 
     if LOAD_MODEL:
-        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model)
+        load_checkpoint(model, torch.load("my_checkpoint.pth.tar"))
 
     check_accuracy(val_loader, model, device=device)
     scaler = GradScaler()    # float16 scaling of gradient
@@ -108,14 +108,14 @@ def main():
             "state_dict": model.state_dict(),
             "optimizer": optimizer.state_dict(),
         }
-        save_checkpoint(checkpoint)
+        save_checkpoint(checkpoint, epoch=epoch)
 
         # check accuracy
         check_accuracy(val_loader, model, device=device)
 
         # print some examples to a folder
         save_predictions_as_images(
-            val_loader, model, folder="saved_images/", device=device
+            val_loader, model, path="./saved_images", device=device
         )
 
 

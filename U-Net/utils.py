@@ -84,7 +84,7 @@ def check_accuracy(loader, model, device="cuda"):
         with torch.no_grad():
             for x, y in loader:
                 x = x.to(device)
-                y = y.to(device)
+                y = y.to(device).unsqueeze(1)
                 predictions = torch.sigmoid(model(x))
                 # TODO: adapt for multiclass (only binary atm)
                 predictions = (predictions > 0.5).float()

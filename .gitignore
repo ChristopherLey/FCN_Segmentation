@@ -1,1 +1,4 @@
 .idea
+/U-Net/checkpoints/checkpoint*
+/U-Net/saved_images/ground_truth*
+/U-Net/saved_images/prediction*
