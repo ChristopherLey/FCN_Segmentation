@@ -1,6 +1,24 @@
 # U-Net Implementation
+#### By Christopher Ley
+
+This is my interpretation and implementation of the famous paper "_[U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)_"
+ using the [Carvana Image Masking Dataset](https://www.kaggle.com/c/carvana-image-masking-challenge) in PyTorch
+
+This data set is a Binary Segmentation exercise of ~400 test images of cars from various angles such as those shown here:
+<p float="left">
+    <img src="U-Net/example_images/0cdf5b5d0ce1_04.jpg" width="49.5%"/>
+    <img src="U-Net/example_images/0cdf5b5d0ce1_04_mask.gif" width="49.5%"/>
+</p>
 
 ### Initial implementation for Binary Segmentation
+
+The implementation performs almost as the winners of the competition (Dice: 0.9926 vs 0.99733) after only 5 epoch and we would expect the results 
+to be as good as the winners using this architecture with more training and a little tweaking of the training 
+hyper-parameters.
+
+Here are the scores for training over 5 epochs:
+
+### Training Results
 
     ```
     0%|          | 0/540 [00:00<?, ?it/s]Accuracy: 103298971/467927040 = 22.08%
@@ -27,3 +45,17 @@
     Dice score: 0.9926225543022156
     
     ```
+And an example of the output vs the ground truth of the validation set, I removed whole makes for the validation set, 
+all 16 angles, the network had never seen this particular make from any angle.
+
+<p float="left">
+    <h3>Ground Truth</h3>
+    <img src="U-Net/example_images/ground_truth_0.png" width="100%"/>
+    <h3>Prediction</h3>
+    <img src="U-Net/example_images/prediction_0.png" width="100%"/></p>
+
+Although limited in scope (binary segmentation for only cars), this architecture performs well with 
+multiclass segmentation, I extended this to apply segmentation to the [NYUv2](https://cs.nyu.edu/~silberman/datasets/nyu_depth_v2.html)
+which is a multiclass objective, with little modification to the above code.
+
+I will clean this up and upload the results and modifications soon!
