@@ -67,4 +67,7 @@ def create_validation_set(path, set_size=48):
 
 
 if __name__ == "__main__":
-    CarvanaDataset()
+    test_set = CarvanaDataset()
+    for image, mask in test_set:
+        print(image)
+        break

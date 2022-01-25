@@ -22,8 +22,9 @@ NUM_WORKERS = 6
 IMAGE_HEIGHT = 1280//2  # 1280 originally
 IMAGE_WIDTH = 1904//2  # 1918 originally
 PIN_MEMORY = True
-LOAD_MODEL = True
-PATH = "../../../Datasets/carvana-image-masking-challenge"
+LOAD_MODEL = False
+
+PATH = "/home/chris/Dropbox/AI/Datasets/CityScapes"
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -78,8 +79,8 @@ def main():
         ],
     )
 
-    model = UNet(in_channels=3, out_channels=1).to(device)
-    loss_fn = nn.BCEWithLogitsLoss()  # Binary Cross-Entropy logits because not sigmoid on output of model,
+    model = UNet(in_channels=3, out_channels=34).to(device)
+    loss_fn = nn.CrossEntropyLoss(ignore_index=-1)  # Binary Cross-Entropy logits because not sigmoid on output of model,
     # change to cross entropy loss for multichannel
 
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
@@ -91,11 +92,10 @@ def main():
         val_transforms,
         num_workers=NUM_WORKERS,
         pin_memory=PIN_MEMORY,
-        dataset="carvana"
     )
 
-    if LOAD_MODEL:
-        load_checkpoint(model, torch.load("./checkpoints/checkpoint_2022-01-06_13:12_epoch_4.pth.tar"))
+    # if LOAD_MODEL:
+    #     load_checkpoint(model, torch.load("./checkpoints/checkpoint_2022-01-06_13:12_epoch_4.pth.tar"))
 
     check_accuracy(val_loader, model, device=device)
     scaler = GradScaler()    # float16 scaling of gradient
