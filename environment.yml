@@ -1,4 +1,4 @@
-name: DeepLearning
+name: /home/chris/Env/DeepLearning
 channels:
   - pytorch
   - anaconda
@@ -169,7 +169,7 @@ dependencies:
   - opencv=4.5.2=py39hf3d152e_0
   - openh264=2.1.1=h4ff587b_0
   - openjpeg=2.4.0=h3ad879b_0
-  - openssl=1.1.1l=h7f8727e_0
+  - openssl=1.1.1m=h7f8727e_0
   - packaging=21.3=pyhd3eb1b0_0
   - pandas=1.3.4=py39h8c16a72_0
   - pandocfilters=1.4.3=py39h06a4308_1
@@ -187,6 +187,7 @@ dependencies:
   - ptyprocess=0.7.0=pyhd3eb1b0_2
   - py-opencv=4.5.2=py39hef51801_0
   - pycparser=2.21=pyhd3eb1b0_0
+  - pydeprecate=0.3.2=pyhd8ed1ab_0
   - pygments=2.10.0=pyhd3eb1b0_0
   - pyopenssl=21.0.0=pyhd3eb1b0_1
   - pyparsing=3.0.4=pyhd3eb1b0_0
@@ -233,6 +234,7 @@ dependencies:
   - tk=8.6.11=h1ccaba5_0
   - toolz=0.11.2=pyhd3eb1b0_0
   - torchaudio=0.10.0=py39_cu113
+  - torchmetrics=0.7.0=pyhd8ed1ab_0
   - torchtext=0.11.0=py39
   - torchvision=0.11.1=py39_cu113
   - tornado=6.1=py39h27cfd23_0
@@ -264,5 +266,12 @@ dependencies:
   - zlib=1.2.11=h7f8727e_4
   - zstd=1.4.9=haebb681_0
   - pip:
+    - appdirs==1.4.4
+    - cityscapesscripts==2.2.0
+    - coloredlogs==15.0.1
+    - humanfriendly==10.0
     - opencv-python==4.5.5.62
     - pycocotools==2.0
+    - pyquaternion==0.9.9
+    - typing==3.7.4.3
+prefix: /home/chris/Env/DeepLearning

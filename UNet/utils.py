@@ -1,9 +1,10 @@
 import os
+from datetime import datetime
+
 import torch
 import torchvision
 from carvana_dataset_tools import CarvanaDataset
 from torch.utils.data import DataLoader
-from datetime import datetime
 
 
 class eval(object):
@@ -30,38 +31,36 @@ def save_checkpoint(state, filename=None, epoch=None):
         if epoch is not None:
             filename = f"./checkpoints/checkpoint_{now.strftime('%Y-%m-%d_%H:%M')}_epoch_{epoch}.pth.tar"
         else:
-            filename = f"./checkpoints/checkpoint_{now.strftime('%Y-%m-%d_%H:%M')}.pth.tar"
+            filename = (
+                f"./checkpoints/checkpoint_{now.strftime('%Y-%m-%d_%H:%M')}.pth.tar"
+            )
 
     print(f"==> Saving Checkpoint to: {filename}")
     torch.save(state, filename)
 
 
 def get_loaders(
-        path,
-        batch_size,
-        train_transform,
-        val_transforms,
-        num_workers=6,
-        pin_memory=True,
-        dataset="carvana"
+    path,
+    batch_size,
+    train_transform,
+    val_transforms,
+    num_workers=6,
+    pin_memory=True,
+    dataset="carvana",
 ):
     if dataset == "carvana":
         train_dataset = CarvanaDataset(
-            path,
-            transform=train_transform,
-            validation=False
+            path, transform=train_transform, validation=False
         )
         train_loader = DataLoader(
             train_dataset,
             batch_size=batch_size,
             num_workers=num_workers,
             pin_memory=pin_memory,
-            shuffle=True
+            shuffle=True,
         )
         validation_dataset = CarvanaDataset(
-            path,
-            transform=val_transforms,
-            validation=True
+            path, transform=val_transforms, validation=True
         )
         validation_loader = DataLoader(
             validation_dataset,
@@ -102,9 +101,7 @@ def check_accuracy(loader, model, device="cuda"):
     )
 
 
-def save_predictions_as_images(
-        loader, model, path="./saved_images", device="cuda"
-):
+def save_predictions_as_images(loader, model, path="./saved_images", device="cuda"):
     with eval(model):
         for idx, (x, y) in enumerate(loader):
             x = x.to(device=device)
@@ -112,8 +109,8 @@ def save_predictions_as_images(
                 prediction = torch.sigmoid(model(x))
                 prediction = (prediction > 0.5).float()
             torchvision.utils.save_image(
-                prediction, os.path.join(path, f'prediction_{idx}.png')
+                prediction, os.path.join(path, f"prediction_{idx}.png")
             )
             torchvision.utils.save_image(
-                y.unsqueeze(1), os.path.join(path, f'ground_truth_{idx}.png')
+                y.unsqueeze(1), os.path.join(path, f"ground_truth_{idx}.png")
             )

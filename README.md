@@ -12,8 +12,8 @@ This data set is a Binary Segmentation exercise of ~400 test images of cars from
 
 ### Initial implementation for Binary Segmentation
 
-The implementation performs almost as the winners of the competition (Dice: 0.9926 vs 0.99733) after only 5 epoch and we would expect the results 
-to be as good as the winners using this architecture with more training and a little tweaking of the training 
+The implementation performs almost as the winners of the competition (Dice: 0.9926 vs 0.99733) after only 5 epoch and we would expect the results
+to be as good as the winners using this architecture with more training and a little tweaking of the training
 hyper-parameters.
 
 Here are the scores for training over 5 epochs by running:
@@ -49,7 +49,7 @@ Accuracy: 466399501/467927040 = 99.67%
 Dice score: 0.9926225543022156
 
 ```
-And an example of the output vs the ground truth of the validation set, I removed whole makes for the validation set, 
+And an example of the output vs the ground truth of the validation set, I removed whole makes for the validation set,
 all 16 angles, the network had never seen this particular make from any angle.
 
 <p float="left">
@@ -58,7 +58,7 @@ all 16 angles, the network had never seen this particular make from any angle.
     <h3>Prediction</h3>
     <img src="U-Net/example_images/prediction_0.png" width="100%"/></p>
 
-Although limited in scope (binary segmentation for only cars), this architecture performs well with 
+Although limited in scope (binary segmentation for only cars), this architecture performs well with
 multiclass segmentation, I extended this to apply segmentation to the [NYUv2](https://cs.nyu.edu/~silberman/datasets/nyu_depth_v2.html)
 which is a multiclass objective, with little modification to the above code.
 

@@ -1,30 +1,28 @@
-import torch
 import albumentations as A
-from albumentations.pytorch import ToTensorV2
-from tqdm import tqdm
+import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.cuda.amp import autocast, GradScaler
+from albumentations.pytorch import ToTensorV2
 from model import UNet
-from utils import (
-    load_checkpoint,
-    save_checkpoint,
-    get_loaders,
-    check_accuracy,
-    save_predictions_as_images,
-)
+from torch.cuda.amp import autocast
+from torch.cuda.amp import GradScaler
+from tqdm import tqdm
+from utils import check_accuracy
+from utils import get_loaders
+from utils import load_checkpoint
+from utils import save_checkpoint
+from utils import save_predictions_as_images
 
 # Hyperparameters etc.
 LEARNING_RATE = 1e-4
 BATCH_SIZE = 8
 NUM_EPOCHS = 5
 NUM_WORKERS = 6
-IMAGE_HEIGHT = 1280//2  # 1280 originally
-IMAGE_WIDTH = 1904//2  # 1918 originally
+IMAGE_HEIGHT = 1280 // 2  # 1280 originally
+IMAGE_WIDTH = 1904 // 2  # 1918 originally
 PIN_MEMORY = True
-LOAD_MODEL = False
-
-PATH = "/home/chris/Dropbox/AI/Datasets/CityScapes"
+LOAD_MODEL = True
+PATH = "../../../Datasets/carvana-image-masking-challenge"
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -79,8 +77,10 @@ def main():
         ],
     )
 
-    model = UNet(in_channels=3, out_channels=34).to(device)
-    loss_fn = nn.CrossEntropyLoss(ignore_index=-1)  # Binary Cross-Entropy logits because not sigmoid on output of model,
+    model = UNet(in_channels=3, out_channels=1).to(device)
+    loss_fn = (
+        nn.BCEWithLogitsLoss()
+    )  # Binary Cross-Entropy logits because not sigmoid on output of model,
     # change to cross entropy loss for multichannel
 
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
@@ -92,13 +92,17 @@ def main():
         val_transforms,
         num_workers=NUM_WORKERS,
         pin_memory=PIN_MEMORY,
+        dataset="carvana",
     )
 
-    # if LOAD_MODEL:
-    #     load_checkpoint(model, torch.load("./checkpoints/checkpoint_2022-01-06_13:12_epoch_4.pth.tar"))
+    if LOAD_MODEL:
+        load_checkpoint(
+            model,
+            torch.load("./checkpoints/checkpoint_2022-01-06_13:12_epoch_4.pth.tar"),
+        )
 
     check_accuracy(val_loader, model, device=device)
-    scaler = GradScaler()    # float16 scaling of gradient
+    scaler = GradScaler()  # float16 scaling of gradient
 
     for epoch in range(NUM_EPOCHS):
         train_fn(train_loader, model, optimizer, loss_fn, scaler)
