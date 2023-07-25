@@ -6,8 +6,8 @@ This is my interpretation and implementation of the famous paper "_[U-Net: Convo
 
 This data set is a Binary Segmentation exercise of ~400 test images of cars from various angles such as those shown here:
 <p float="left">
-    <img src="U-Net/example_images/0cdf5b5d0ce1_04.jpg" width="49.5%"/>
-    <img src="U-Net/example_images/0cdf5b5d0ce1_04_mask.gif" width="49.5%"/>
+    <img src="UNet/example_images/0cdf5b5d0ce1_04.jpg" width="49.5%"/>
+    <img src="UNet/example_images/0cdf5b5d0ce1_04_mask.gif" width="49.5%"/>
 </p>
 
 ### Initial implementation for Binary Segmentation
@@ -54,9 +54,9 @@ all 16 angles, the network had never seen this particular make from any angle.
 
 <p float="left">
     <h3>Ground Truth</h3>
-    <img src="U-Net/example_images/ground_truth_0.png" width="100%"/>
+    <img src="UNet/example_images/ground_truth_0.png" width="100%"/>
     <h3>Prediction</h3>
-    <img src="U-Net/example_images/prediction_0.png" width="100%"/></p>
+    <img src="UNet/example_images/prediction_0.png" width="100%"/></p>
 
 Although limited in scope (binary segmentation for only cars), this architecture performs well with
 multiclass segmentation, I extended this to apply segmentation to the [NYUv2](https://cs.nyu.edu/~silberman/datasets/nyu_depth_v2.html)
